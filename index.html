@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rent & Reuse</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f5f7f6;
+    color: #222;
+}
+
+/* NAVBAR */
+nav {
+    background: white;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+    color: #176b4d;
+}
+
+.logo span {
+    color: #f39c12;
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.nav-links a:hover {
+    color: #176b4d;
+}
+
+/* PAGES */
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* HOME */
+.hero {
+    min-height: 500px;
+    background: linear-gradient(120deg, #176b4d, #2d9971);
+    color: white;
+    padding: 100px 7%;
+    display: flex;
+    align-items: center;
+}
+
+.hero-content {
+    max-width: 650px;
+}
+
+.hero h1 {
+    font-size: 55px;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.search-box {
+    background: white;
+    padding: 10px;
+    border-radius: 12px;
+    display: flex;
+    max-width: 600px;
+}
+
+.search-box input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 15px;
+    font-size: 16px;
+}
+
+.btn {
+    border: none;
+    padding: 13px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.primary {
+    background: #176b4d;
+    color: white;
+}
+
+.primary:hover {
+    background: #0f5139;
+}
+
+.orange {
+    background: #f39c12;
+    color: white;
+}
+
+.section {
+    padding: 60px 7%;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.section-title h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+/* CATEGORIES */
+.categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 20px;
+}
+
+.category {
+    background: white;
+    padding: 25px;
+    text-align: center;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+}
+
+.category:hover {
+    transform: translateY(-4px);
+}
+
+.category-icon {
+    font-size: 35px;
+    margin-bottom: 10px;
+}
+
+/* ITEMS */
+.items {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+}
+
+.card-img {
+    height: 180px;
+    background: #e9efec;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 65px;
+}
+
+.card-body {
+    padding: 18px;
+}
+
+.card-body h3 {
+    margin-bottom: 8px;
+}
+
+.card-body p {
+    color: #666;
+    margin: 6px 0;
+}
+
+.price {
+    color: #176b4d !important;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card-buttons {
+    display: flex;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.card-buttons button {
+    flex: 1;
+}
+
+/* BROWSE */
+.browse-header {
+    padding: 50px 7% 20px;
+}
+
+.filter-box {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 7%;
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.filter-box input,
+.filter-box select {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+}
+
+/* FORM */
+.form-container {
+    max-width: 700px;
+    margin: 50px auto;
+    background: white;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+}
+
+.form-container h2 {
+    margin-bottom: 25px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ddd;
+    border-radius: 7px;
+}
+
+.form-group textarea {
+    height: 100px;
+}
+
+/* REQUESTS */
+.request {
+    background: white;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.status {
+    padding: 7px 12px;
+    border-radius: 20px;
+    background: #fff3cd;
+    color: #856404;
+}
+
+/* PROFILE */
+.profile {
+    max-width: 700px;
+    margin: 50px auto;
+    background: white;
+    padding: 35px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+.profile-icon {
+    font-size: 70px;
+    margin-bottom: 15px;
+}
+
+.rating {
+    color: #f39c12;
+    font-size: 22px;
+    margin: 10px;
+}
+
+/* MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+.close {
+    float: right;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+/* FOOTER */
+footer {
+    background: #123d2e;
+    color: white;
+    padding: 35px 7%;
+    text-align: center;
+    margin-top: 50px;
+}
+
+@media(max-width:700px) {
+
+    nav {
+        padding: 0 4%;
+    }
+
+    .nav-links {
+        gap: 10px;
+        font-size: 13px;
+    }
+
+    .hero {
+        padding: 70px 5%;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .section {
+        padding: 40px 5%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+
+    <div class="logo">
+        Rent <span>&</span> Reuse
+    </div>
+
+    <div class="nav-links">
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('browse')">Browse</a>
+        <a onclick="showPage('add')">Add Item</a>
+        <a onclick="showPage('requests')">Requests</a>
+        <a onclick="showPage('ownerRequestsPage'); loadOwnerRequests()">
+    Owner Requests
+</a>
+        <a onclick="showPage('profile')">Profile</a>
+        <a onclick="showPage('login')">Login</a>
+
+    </div>
+
+</nav>
+
+
+<!-- HOME PAGE -->
+<div id="home" class="page active">
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <h1>Rent. Borrow. Reuse.</h1>
+
+        <p>
+            Find things you need from people around you,
+            or share items you no longer use.
+            Save money, reduce waste and build a trusted community.
+        </p>
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="homeSearch"
+                placeholder="What are you looking for?"
+            >
+
+            <button
+                class="btn primary"
+                onclick="searchFromHome()">
+                Search
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="section-title">
+        <h2>Browse Categories</h2>
+        <p>Find what you need quickly</p>
+    </div>
+
+    <div class="categories">
+
+        <div class="category" onclick="filterCategory('Electronics')">
+            <div class="category-icon">📱</div>
+            Electronics
+        </div>
+
+        <div class="category" onclick="filterCategory('Books')">
+            <div class="category-icon">📚</div>
+            Books
+        </div>
+
+        <div class="category" onclick="filterCategory('Furniture')">
+            <div class="category-icon">🪑</div>
+            Furniture
+        </div>
+
+        <div class="category" onclick="filterCategory('Clothes')">
+            <div class="category-icon">👕</div>
+            Clothes
+        </div>
+
+        <div class="category" onclick="filterCategory('Tools')">
+            <div class="category-icon">🔧</div>
+            Tools
+        </div>
+
+        <div class="category" onclick="filterCategory('Sports')">
+            <div class="category-icon">⚽</div>
+            Sports
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <div class="section-title">
+        <h2>Popular Items</h2>
+        <p>Items available from our community</p>
+    </div>
+
+    <div id="homeItems" class="items"></div>
+
+</section>
+
+</div>
+
+
+<!-- BROWSE PAGE -->
+<div id="browse" class="page">
+
+<div class="browse-header">
+
+    <h1>Browse Available Items</h1>
+
+    <p>
+        Find items that people are renting or sharing.
+    </p>
+
+</div>
+
+<div class="filter-box">
+
+    <input
+        type="text"
+        id="browseSearch"
+        placeholder="Search items..."
+        oninput="displayItems()"
+    >
+
+    <select id="categoryFilter" onchange="displayItems()">
+
+        <option value="All">All Categories</option>
+        <option>Electronics</option>
+        <option>Books</option>
+        <option>Furniture</option>
+        <option>Clothes</option>
+        <option>Tools</option>
+        <option>Sports</option>
+
+    </select>
+
+</div>
+
+<section class="section">
+
+    <div id="browseItems" class="items"></div>
+
+</section>
+
+</div>
+
+
+<!-- ADD ITEM PAGE -->
+<div id="add" class="page">
+
+<div class="form-container">
+
+    <h2>➕ Post an Unused Item</h2>
+
+    <p style="margin-bottom:25px;color:#666;">
+        Share something you no longer use with someone who needs it.
+    </p>
+
+    <div class="form-group">
+        <label>Item Name</label>
+        <input id="itemName" placeholder="Example: Study Table">
+    </div>
+
+    <div class="form-group">
+        <label>Category</label>
+
+        <select id="itemCategory">
+
+            <option>Electronics</option>
+            <option>Books</option>
+            <option>Furniture</option>
+            <option>Clothes</option>
+            <option>Tools</option>
+            <option>Sports</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+        <label>Description</label>
+
+        <textarea
+            id="itemDescription"
+            placeholder="Describe your item...">
+        </textarea>
+
+    </div>
+
+    <div class="form-group">
+        <label>Condition</label>
+
+        <select id="itemCondition">
+
+            <option>Like New</option>
+            <option>Good</option>
+            <option>Used</option>
+
+        </select>
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Rent Price (₹ per day)</label>
+
+        <input
+            type="number"
+            id="itemPrice"
+            placeholder="Enter 0 for free borrowing">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Location</label>
+
+        <input
+            id="itemLocation"
+            placeholder="Example: Kadapa">
+
+    </div>
+    <div class="form-group">
+
+        <label>Item Image</label>
+
+        <input type="file" id="itemImage" accept="image/*">
+
+    </div>
+
+    <div class="form-group">
+
+        <label>Sharing Option</label>
+
+        <select id="sharingOption">
+
+            <option>Available for Rent</option>
+            <option>Available for Borrow</option>
+            <option>Rent or Borrow</option>
+
+        </select>
+
+    </div>
+
+    <button
+        class="btn primary"
+        style="width:100%;"
+        onclick="addItem()">
+
+        Post Item
+
+    </button>
+
+</div>
+
+</div>
+
+
+<!-- REQUESTS PAGE -->
+<div id="requests" class="page">
+
+<section class="section">
+
+    <div class="section-title">
+
+        <h2>My Requests</h2>
+
+        <p>
+            Track your rental and borrowing requests.
+        </p>
+
+    </div>
+
+    <div id="requestsList">
+
+        <div class="request">
+
+            <div>
+
+                <h3>📚 Engineering Mathematics Book</h3>
+
+                <p>Requested for borrowing</p>
+
+            </div>
+
+            <span class="status">
+                Pending
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+</div>
+
+<!-- OWNER REQUESTS PAGE -->
+
+<div id="ownerRequestsPage" class="page">
+
+    <section class="section">
+
+        <div class="section-title">
+
+            <h2>Requests for My Items</h2>
+
+            <p>
+                Approve or reject requests from users.
+            </p>
+
+        </div>
+
+        <div id="ownerRequests"></div>
+
+    </section>
+
+</div>
+
+<!-- PROFILE PAGE -->
+<div id="profile" class="page">
+
+<div class="profile">
+
+    <div class="profile-icon">
+        👤
+    </div>
+
+    <h2>Community Member</h2>
+
+    <div class="rating">
+        ★★★★★
+    </div>
+
+    <p>Trusted Member</p>
+
+    <br>
+
+    <p>
+        Building trust through responsible renting,
+        borrowing and sharing.
+    </p>
+
+    <br>
+
+    <button class="btn primary"></button>
+        Verify Profile
+
+    </button>
+
+</div>
+
+</div>
+
+<!-- LOGIN PAGE -->
+<div id="login" class="page">
+
+    <div class="login-container">
+        <h2>Welcome to Rent & Reuse</h2>
+        <p>Login to continue</p>
+
+        <input type="text" id="loginName" placeholder="Enter your name">
+
+        <input type="email" id="loginEmail" placeholder="Enter your email">
+
+        <input type="password" id="loginPassword" placeholder="Enter your password">
+
+        <button onclick="loginUser()">Login</button>
+
+        <p>
+            Don't have an account?
+            <a onclick="showSignup()">Sign Up</a>
+        </p>
+    </div>
+
+</div>
+<!-- ITEM DETAILS MODAL -->
+<div id="itemModal" class="modal">
+
+<div class="modal-content">
+
+    <span
+        class="close"
+        onclick="closeModal()">
+        ×
+    </span>
+
+    <div id="modalContent"></div>
+
+</div>
+
+</div>
+
+
+<footer>
+
+    <h3>Rent & Reuse</h3>
+
+    <p style="margin-top:10px;">
+        Share more. Waste less. Build trust.
+    </p>
+
+</footer>
+
+
+<script>
+
+/* SAMPLE ITEMS */
+
+let items = [
+
+{
+    id: 1,
+    name: "Laptop",
+    category: "Electronics",
+    description: "Good condition laptop suitable for study and basic work.",
+    condition: "Good",
+    price: 300,
+    location: "Kadapa",
+    option: "Rent or Borrow",
+    owner: "Rahul",
+    rating: 5,
+    icon: "💻"
+},
+
+{
+    id: 2,
+    name: "Engineering Books",
+    category: "Books",
+    description: "Engineering mathematics and physics books.",
+    condition: "Good",
+    price: 0,
+    location: "Kadapa",
+    option: "Available for Borrow",
+    owner: "Priya",
+    rating: 5,
+    icon: "📚"
+},
+
+{
+    id: 3,
+    name: "Study Table",
+    category: "Furniture",
+    description: "Wooden study table in good condition.",
+    condition: "Used",
+    price: 100,
+    location: "Kadapa",
+    option: "Available for Rent",
+    owner: "Arun",
+    rating: 4,
+    icon: "🪑"
+},
+
+{
+    id: 4,
+    name: "Football",
+    category: "Sports",
+    description: "Football available for temporary use.",
+    condition: "Good",
+    price: 50,
+    location: "Kadapa",
+    option: "Rent or Borrow",
+    owner: "Vijay",
+    rating: 5,
+    icon: "⚽"
+}
+
+];
+let savedItems = JSON.parse(localStorage.getItem("items"));
+
+if (savedItems) {
+    items = savedItems;
+}
+
+function loginUser() {
+
+    const name =
+        document.getElementById("loginName").value.trim();
+
+    const email =
+        document.getElementById("loginEmail").value.trim();
+
+    const password =
+        document.getElementById("loginPassword").value.trim();
+
+
+    if (
+        name === "" ||
+        email === "" ||
+        password === ""
+    ) {
+
+        alert(
+            "Please enter your name, email and password."
+        );
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "userName",
+        name
+    );
+
+
+    localStorage.setItem(
+        "userEmail",
+        email
+    );
+
+
+    showPage("home");
+
+}
+/* SHOW PAGE */
+
+function showPage(pageName) {
+
+    document.querySelectorAll(".page")
+        .forEach(page => page.classList.remove("active"));
+
+    document.getElementById(pageName)
+        .classList.add("active");
+
+    window.scrollTo(0,0);
+
+    if(pageName === "browse") {
+        displayItems();
+    }
+
+    if(pageName === "home") {
+        displayHomeItems();
+    }
+}
+
+
+/* HOME ITEMS */
+
+function displayHomeItems() {
+
+    let container = document.getElementById("homeItems");
+
+    container.innerHTML = "";
+
+    items.slice(0,4).forEach(item => {
+
+        container.innerHTML += createCard(item);
+
+    });
+
+}
+
+
+/* BROWSE ITEMS */
+
+function displayItems() {
+
+    let container = document.getElementById("browseItems");
+
+    let search =
+        document.getElementById("browseSearch")
+        .value
+        .toLowerCase();
+
+    let category =
+        document.getElementById("categoryFilter")
+        .value;
+
+    let filtered = items.filter(item => {
+
+        let matchesSearch =
+            item.name.toLowerCase().includes(search);
+
+        let matchesCategory =
+            category === "All" ||
+            item.category === category;
+
+        return matchesSearch && matchesCategory;
+
+    });
+
+    container.innerHTML = "";
+
+    if(filtered.length === 0) {
+
+        container.innerHTML =
+        "<p>No items found.</p>";
+
+        return;
+
+    }
+
+    filtered.forEach(item => {
+
+        container.innerHTML += createCard(item);
+
+    });
+
+}
+
+
+/* CREATE CARD */
+
+function createCard(item) {
+
+    return `
+
+    <div class="card">
+
+       <div class="card-img">
+         ${
+             item.imageURL
+        ? `<img src="${item.imageURL}" alt="${item.name}" style="width:100%; height:200px; object-fit:cover;">`
+            : item.icon
+         }
+        </div>
+
+        <div class="card-body">
+
+            <h3>${item.name}</h3>
+
+            <p>${item.category}</p>
+
+            <p>📍 ${item.location}</p>
+
+            <p>Condition: ${item.condition}</p>
+
+            <p class="price">
+
+                ${
+                    item.price == 0
+                    ? "Free to Borrow"
+                    : "₹" + item.price + " / day"
+                }
+
+            </p>
+
+            <div class="card-buttons">
+
+                <button
+                    class="btn primary"
+                    onclick="viewItem(${item.id})">
+
+                    View Details
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    `;
+
+}
+
+
+/* VIEW ITEM */
+
+function viewItem(id) {
+
+    let item = items.find(i => i.id === id);
+
+    let stars = "★".repeat(item.rating);
+
+    document.getElementById("modalContent").innerHTML = `
+
+        <div style="text-align:center;font-size:80px;">
+            ${item.icon}
+        </div>
+
+        <h2>${item.name}</h2>
+
+        <p style="margin-top:10px;">
+            ${item.description}
+        </p>
+
+        <br>
+
+        <p><b>Category:</b> ${item.category}</p>
+
+        <p><b>Condition:</b> ${item.condition}</p>
+
+        <p><b>Location:</b> ${item.location}</p>
+
+        <p><b>Option:</b> ${item.option}</p>
+
+        <p class="price">
+
+            ${
+                item.price == 0
+                ? "Free to Borrow"
+                : "₹" + item.price + " / day"
+            }
+
+        </p>
+
+        <hr style="margin:20px 0;">
+
+        <h3>Owner</h3>
+
+        <p style="margin-top:8px;">
+            👤 ${item.owner}
+        </p>
+
+        <p>
+            <span style="color:#f39c12;">
+                ${stars}
+            </span>
+            Trusted user
+        </p>
+
+        <br>
+
+        <button
+            class="btn primary"
+            onclick="sendRequest(${item.id}, 'Rent')">
+
+            Request to Rent
+
+        </button>
+
+        <button
+            class="btn orange"
+            onclick="sendRequest(${item.id}, 'Borrow')">
+
+            Request to Borrow
+
+        </button>
+
+        <button
+            class="btn"
+            style="background:#eee;margin-top:10px;width:100%;"
+            onclick="contactOwner('${item.owner}')">
+
+            💬 Contact Owner
+
+        </button>
+
+    `;
+
+    document.getElementById("itemModal")
+        .classList.add("show");
+
+}
+
+
+/* CLOSE MODAL */
+
+function closeModal() {
+
+    document.getElementById("itemModal")
+        .classList.remove("show");
+
+}
+
+
+/* REQUEST */
+async function sendRequest(id, type) {
+
+    console.log("REQUEST BUTTON CLICKED");
+    console.log("Item ID:", id);
+    console.log("Type:", type);
+
+
+    const item = items.find(function(item) {
+
+        return item.id == id;
+
+    });
+
+
+    if (!item) {
+
+        alert("Item not found.");
+
+        return;
+
+    }
+
+
+    const requester =
+        localStorage.getItem("userName") || "Guest User";
+
+
+    const requesterEmail =
+        localStorage.getItem("userEmail") ||
+        "guest@example.com";
+
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/requests",
+            {
+
+                method: "POST",
+
+                headers: {
+
+                    "Content-Type": "application/json"
+
+                },
+
+                body: JSON.stringify({
+
+                    item_id: item.id,
+
+                    requester: requester,
+
+                    requester_email: requesterEmail,
+
+                    type: type
+
+                })
+
+            }
+        );
+
+
+        const data = await response.json();
+
+
+        console.log("BACKEND RESPONSE:", data);
+
+
+        if (!response.ok) {
+
+            alert(
+                data.error ||
+                "Request failed."
+            );
+
+            return;
+
+        }
+
+
+        closeModal();
+
+
+        alert(
+            "Request sent successfully!"
+        );
+
+
+        showPage("requests");
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "REQUEST ERROR:",
+            error
+        );
+
+
+        alert(
+            "Backend connection failed.\n\n" +
+            "Make sure server.py is running."
+        );
+
+    }
+
+}
+
+/* LOAD OWNER REQUESTS */
+
+async function loadOwnerRequests() {
+
+    try {
+
+        let response =
+            await fetch(
+                "http://127.0.0.1:5000/owner-requests"
+            );
+
+        let requests =
+            await response.json();
+
+        let container =
+            document.getElementById("ownerRequests");
+
+        container.innerHTML = "";
+
+        if (requests.length === 0) {
+
+            container.innerHTML =
+                "<p>No requests received.</p>";
+
+            return;
+        }
+
+        requests.forEach(req => {
+
+            let item =
+                items.find(i => i.id == req.item_id);
+
+            let itemName =
+                item ? item.name : "Unknown Item";
+
+            container.innerHTML += `
+
+                <div class="request">
+
+                    <div>
+
+                        <h3>${itemName}</h3>
+
+                        <p>
+                            👤 Requester:
+                            <b>${req.requester}</b>
+                        </p>
+
+                        <p>
+                            📧 ${req.requester_email}
+                        </p>
+
+                        <p>
+                            Request type:
+                            <b>${req.type}</b>
+                        </p>
+
+                        <p>
+                            Status:
+                            <b>${req.status}</b>
+                        </p>
+
+                    </div>
+
+                    <div>
+
+                        ${
+                            req.status === "Pending"
+
+                            ?
+
+                            `
+
+                            <button
+                                class="btn primary"
+                                onclick="approveRequest(${req.id})">
+
+                                ✓ Approve
+
+                            </button>
+
+                            <button
+                                class="btn"
+                                style="background:#e74c3c;color:white;"
+                                onclick="rejectRequest(${req.id})">
+
+                                ✕ Reject
+
+                            </button>
+
+                            `
+
+                            :
+
+                            `<span class="status">
+                                ${req.status}
+                            </span>`
+                        }
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+    } catch (error) {
+
+        showMessage(
+            "Cannot load owner requests.",
+            "error"
+        );
+    }
+}
+
+async function approveRequest(id) {
+
+    try {
+
+        let response = await fetch(
+            "http://127.0.0.1:5000/requests/" +
+            id +
+            "/approve",
+            {
+                method: "PUT"
+            }
+        );
+
+        let data = await response.json();
+
+        if (!response.ok) {
+
+            showMessage(
+                data.error || "Approval failed",
+                "error"
+            );
+
+            return;
+        }
+
+        showMessage(
+            "Request approved successfully!",
+            "success"
+        );
+
+        loadOwnerRequests();
+
+    } catch (error) {
+
+        showMessage(
+            "Cannot connect to backend.",
+            "error"
+        );
+    }
+}
+
+async function rejectRequest(id) {
+
+    try {
+
+        let response = await fetch(
+            "http://127.0.0.1:5000/requests/" +
+            id +
+            "/reject",
+            {
+                method: "PUT"
+            }
+        );
+
+        let data = await response.json();
+
+        if (!response.ok) {
+
+            showMessage(
+                data.error || "Rejection failed",
+                "error"
+            );
+
+            return;
+        }
+
+        showMessage(
+            "Request rejected.",
+            "success"
+        );
+
+        loadOwnerRequests();
+
+    } catch (error) {
+
+        showMessage(
+            "Cannot connect to backend.",
+            "error"
+        );
+    }
+}
+
+/* INITIAL LOAD */
+
+displayHomeItems();
+
+</script>
+
+</body>
+</html>
